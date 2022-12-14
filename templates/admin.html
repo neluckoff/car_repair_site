@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <title>CarTunnes | Admin Panel</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="../static/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Ubuntu:wght@400;500&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../static/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="/" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarTunnes | Admin Panel</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="/admin/tickets" class="nav-item nav-link">Список тикетов</a>
+            </div>
+            <a href="/" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">На главную<i class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Contact Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="text-primary text-uppercase">// Admin Panel //</h6>
+                <h1 class="mb-5">Создать заказов</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="row gy-4">
+                        <div class="bg-light d-flex flex-column justify-content-center p-4">
+                            <h5 class="text-uppercase">Создание тикета</h5>
+                            <form method="post" action="/admin/ticket">
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-6">
+                                        <input id="date" name="date" type="date" class="form-control border-0" placeholder="Дата" style="height: 55px;" required>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <select id="client" name="client" class="form-select border-0" style="height: 55px;">
+                                            <option selected>Выберите клиента</option>
+                                            {% for elem in name_clients %}
+                                            <option value={{ elem[0] }}>{{ elem[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-6">
+                                        <input id="auto_num" name="auto_num" type="text" class="form-control border-0" placeholder="Номер автомобиля" style="height: 55px;" required>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <select id="auto" name="auto" class="form-select border-0" style="height: 55px;">
+                                            <option selected>Выберите автомобиль</option>
+                                            {% for elem in autos %}
+                                            <option value={{ elem[0] }}>{{ elem[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <textarea name="desc" id="desc" class="form-control border-0" placeholder="Описание к тикету" style="height: 100px;"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-9">
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Создать тикет</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4" style="padding-top: 20px;">
+                <div class="col-6" style="border-right: 10px solid #fff">
+                    <div class="row gy-4">
+                        <div class="bg-light d-flex flex-column justify-content-center p-4">
+                            <h5 class="text-uppercase">Добавить тюнинг в тикет</h5>
+                            <form method="post" action="/admin/tun_in_ticket">
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <select id="ticket" name="ticket" class="form-select border-0" style="height: 55px;">
+                                            <option selected>Выберите тикет</option>
+                                            {% for elem in tickets %}
+                                            <option value={{ elem[0] }}>{{ elem[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <select id="tun" name="tun" class="form-select border-0" style="height: 55px;">
+                                            <option selected>Выберите тюнинг</option>
+                                            {% for elem in tunning %}
+                                            <option value={{ elem[0] }}>{{ elem[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Добавить</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" style="border-left: 10px solid #fff">
+                    <div class="row gy-4">
+                        <div class="bg-light d-flex flex-column justify-content-center p-4">
+                            <h5 class="text-uppercase">Оформление заказа</h5>
+                            <form method="post" action="/admin/order">
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <select id="ticket" name="ticket" class="form-select border-0" style="height: 55px;">
+                                            <option selected>Выберите тикет</option>
+                                            {% for elem in tickets %}
+                                            <option value={{ elem[0] }}>{{ elem[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="cost" name="cost" type="number" step="0.01" class="form-control border-0" placeholder="Итоговая стоимость" style="height: 55px;" required>
+                                    </div>
+                                </div> 
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Оформить заказ</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Автомобили и Тюннинг</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-6 col-sm-6" style="border-right: 10px solid #fff">
+                    <div class="row gy-2">
+                        <div class="bg-light d-flex flex-column justify-content-center p-4">
+                            <h5 class="text-uppercase">Добавление автомобиля</h5>
+                            <form method="post" action="/admin/auto">
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="name" name="name" type="text" class="form-control border-0" placeholder="Марка" style="height: 55px;" required>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="model" name="model" type="text" class="form-control border-0" placeholder="Модель" style="height: 55px;" required>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="year" name="year" type="number" min='1700' class="form-control border-0" placeholder="Год" style="height: 55px;" required>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-5">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Создать автомобиль</button>
+                                    </div>
+                                    <div class="col-12 col-sm-7"> </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6" style="border-left: 10px solid #fff">
+                    <div class="row gy-2">
+                        <div class="bg-light d-flex flex-column justify-content-center p-4">
+                            <h5 class="text-uppercase">Добавление тюнинга</h5>
+                            <form method="post" action="/admin/tunning">
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="name" name="name" type="text" class="form-control border-0" placeholder="Название" style="height: 55px;" required>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <textarea id="desc" name="desc" class="form-control border-0" placeholder="Описание" style="height: 55px;" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-12">
+                                        <input id="cost" name="cost" type="number" step="0.01" class="form-control border-0" placeholder="Цена" style="height: 55px;" required>
+                                    </div>
+                                </div>
+                                <div class="row gy-4" style="padding-top: 20px;">
+                                    <div class="col-12 col-sm-7">
+                                    
+                                    </div>
+                                    <div class="col-12 col-sm-5"> 
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Создать тюннинг</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">CarTunnes</a>, Все права защищены.
+
+                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                        Designed By <a class="border-bottom" href="https://github.com/neluckoff">luckoff</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/wow/wow.min.js"></script>
+    <script src="../static/lib/easing/easing.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
+    <script src="../static/lib/counterup/counterup.min.js"></script>
+    <script src="../static/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../static/js/main.js"></script>
+</body>
+
+</html>
